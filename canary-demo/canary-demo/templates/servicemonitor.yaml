@@ -3,9 +3,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: {{ .Release.Name }}-main-servicemonitor
+  namespace: canary-demo
+  release: prometheus
   labels:
     app: {{ .Release.Name }}
 spec:
+  serviceMonitorSelector:
+    namespaceSelector:
+      - canary-demo
   selector:
     matchLabels:
       app: {{ .Release.Name }}
@@ -19,9 +24,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: {{ .Release.Name }}-canary-servicemonitor
+  namespace: canary-demo
+  release: prometheus
   labels:
     app: {{ .Release.Name }}-canary
 spec:
+  serviceMonitorSelector:
+    namespaceSelector:
+      - canary-demo
   selector:
     matchLabels:
       app: {{ .Release.Name }}-canary
